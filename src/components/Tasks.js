@@ -44,7 +44,6 @@ const Tasks = () => {
         <div key={t.id} style={index===tasks.length-1? { marginBottom:'50px'}:{}} className='task-task'>
             <h3>{t.task}</h3>
             <div>
-            <button>Edit</button>
             <button onClick={()=>dispatch(removeTask(t))}>Delete</button>
             </div>
         </div>
