@@ -15,6 +15,11 @@ export const changeTask = (state = initialState, action) => {
                     completed:action.payload.completed,
                     isEdited:action.payload.isEdited
                 }
+            }else if(action.payload.isEdited===true){
+                return {
+                    ...e,
+                    isEdited:false
+                }
             }else{
                 return e
             }
