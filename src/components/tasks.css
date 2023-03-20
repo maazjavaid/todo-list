@@ -51,7 +51,7 @@
 .task-task div{
     margin-right: 15px;
 }
-/* .task-task div :nth-child(1) {
+.task-task .button-container :nth-child(1) {
     height: 30px;
     width: 70px;
     margin-left: 15px;
@@ -61,9 +61,9 @@
     cursor: pointer;
     color: white;
     border-radius: 5px;
-} */
+}
 
-.task-task div :nth-child(1) {
+.task-task .button-container :nth-child(2) {
     height: 30px;
     width: 70px;
     margin-left: 15px;

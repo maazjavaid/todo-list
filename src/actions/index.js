@@ -12,8 +12,9 @@ export const removeTask=(task)=>{
     }
 }
 
-export const updateTask=()=>{
+export const updateTask=(task)=>{
     return {
-        type:'UPDATETASK'
+        type:'UPDATETASK',
+        payload:task
     }
 }

@@ -11,7 +11,9 @@ export const changeTask = (state = initialState, action) => {
             if (e.id===action.payload.id) {
                 return {
                     ...e,
-                    task:action.payload.task
+                    task:action.payload.task,
+                    completed:action.payload.completed,
+                    isEdited:action.payload.isEdited
                 }
             }else{
                 return e

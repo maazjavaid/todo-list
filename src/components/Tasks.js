@@ -1,16 +1,27 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
-import { addtask, removeTask } from '../actions'
+import { addtask, removeTask, updateTask } from '../actions'
 import './tasks.css'
-const Tasks = () => {
+const Tasks = () => {  
   const tasks=useSelector((state)=>state.changeTask)
   const dispatch=useDispatch()
-  console.log(tasks)
   const uid=v4()
+  const handleEditButton=(t)=>{
+    seteditinput(t)
+    dispatch(updateTask({...t,isEdited:true}))
+  }
   const [input,setinput]=useState({
     id:uid,
-    task:''
+    task:'',
+    completed:false,
+    isEdited:false
+  })
+  const [editinput,seteditinput]=useState({
+    id:uid,
+    task:'',
+    completed:false,
+    isEdited:false
   })
 
   const dispatchFunction=()=>{
@@ -42,10 +53,38 @@ const Tasks = () => {
     {tasks.map((t,index)=>{
         return(
         <div key={t.id} style={index===tasks.length-1? { marginBottom:'50px'}:{}} className='task-task'>
-            <h3>{t.task}</h3>
-            <div>
+            {t.isEdited?
+            <>
+            <div  style={{display:'flex',marginLeft:'15px'}}>
+            <input type="text" 
+            value={editinput.task} 
+            onChange={(e)=>{
+                seteditinput((prev)=>{
+                    return{
+                        ...prev,
+                        task:e.target.value
+                    }
+                })
+            }}
+            />
+            </div>
+            <div className='button-container'>
+            <button onClick={()=>dispatch(updateTask(editinput))}>Save</button>    
+            <button onClick={()=>dispatch(updateTask({...t,isEdited:!t.isEdited}))}>Cancel</button>    
+            </div>
+            </>
+            :
+            <>
+            <div  style={{display:'flex',marginLeft:'15px'}}>
+            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(updateTask({...t,completed:!t.completed}))} />
+            <h3 style={t.completed?{textDecoration:'line-through'}:{}}>{t.task}</h3>
+            </div>
+            <div className='button-container'>
+            <button onClick={()=>handleEditButton(t)}>Edit</button>    
             <button onClick={()=>dispatch(removeTask(t))}>Delete</button>
             </div>
+            </>
+            }
         </div>
         )
     })}
