@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
-import { addtask, removeTask, updateTask } from '../actions'
+// import { addtask, removeTask, updateTask } from '../actions'
+import { ADDTASK, REMOVETASK, UPDATETASK } from '../redux/tasks'
 import './tasks.css'
 const Tasks = () => {  
   const tasks=useSelector((state)=>state.changeTask)
+  console.log(tasks)
   const dispatch=useDispatch()
   const uid=v4()
   const handleEditButton=(t)=>{
     seteditinput(t)
-    dispatch(updateTask({...t,isEdited:true}))
+    dispatch(UPDATETASK({...t,isEdited:true}))
   }
   const [input,setinput]=useState({
     id:uid,
@@ -25,7 +27,7 @@ const Tasks = () => {
   })
 
   const dispatchFunction=()=>{
-    dispatch(addtask(input))
+    dispatch(ADDTASK(input))
     setinput((prev)=>{
         return{
             ...prev,
@@ -69,19 +71,19 @@ const Tasks = () => {
             />
             </div>
             <div className='button-container'>
-            <button onClick={()=>dispatch(updateTask(editinput))}>Save</button>    
-            <button onClick={()=>dispatch(updateTask({...t,isEdited:!t.isEdited}))}>Cancel</button>    
+            <button onClick={()=>dispatch(UPDATETASK(editinput))}>Save</button>    
+            <button onClick={()=>dispatch(UPDATETASK({...t,isEdited:!t.isEdited}))}>Cancel</button>    
             </div>
             </>
             :
             <>
             <div  style={{display:'flex',marginLeft:'15px'}}>
-            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(updateTask({...t,completed:!t.completed}))} />
+            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(UPDATETASK({...t,completed:!t.completed}))} />
             <h3 style={t.completed?{textDecoration:'line-through'}:{}}>{t.task}</h3>
             </div>
             <div className='button-container'>
             <button onClick={()=>handleEditButton(t)}>Edit</button>    
-            <button onClick={()=>dispatch(removeTask(t))}>Delete</button>
+            <button onClick={()=>dispatch(REMOVETASK(t))}>Delete</button>
             </div>
             </>
             }
