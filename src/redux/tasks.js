@@ -4,15 +4,15 @@ const taskSlice=createSlice({
     name:'tasks',
     initialState:[],
     reducers:{
-        ADDTASK:(state,action)=>{
+        addTask:(state,action)=>{
            state=[...state,action.payload]
            return state
         },
-        REMOVETASK:(state,action)=>{
+        removeTask:(state,action)=>{
             state=state.filter((e)=>e.id!==action.payload.id)
             return state
         },
-        UPDATETASK:(state,action)=>{
+        updateTask:(state,action)=>{
             const update=state.map((e)=>{
             if (e.id===action.payload.id) {
                 return {
@@ -21,14 +21,15 @@ const taskSlice=createSlice({
                     completed:action.payload.completed,
                     isEdited:action.payload.isEdited
                 }
-            }else if(action.payload.isEdited===true){
+            }
+            if(action.payload.isEdited===true){
                 return {
                     ...e,
                     isEdited:false
                 }
-            }else{
-                return e
             }
+            
+            return e
         })
         state=update
         return state
@@ -37,5 +38,5 @@ const taskSlice=createSlice({
 })
 
 
-export const {ADDTASK,REMOVETASK,UPDATETASK}=taskSlice.actions
+export const {addTask,removeTask,updateTask}=taskSlice.actions
 export default taskSlice.reducer 

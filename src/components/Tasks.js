@@ -1,25 +1,23 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
-// import { addtask, removeTask, updateTask } from '../actions'
-import { ADDTASK, REMOVETASK, UPDATETASK } from '../redux/tasks'
+import { addTask, removeTask, updateTask } from '../redux/tasks'
 import './tasks.css'
 const Tasks = () => {  
   const tasks=useSelector((state)=>state.tasks)
-  console.log(tasks)
   const dispatch=useDispatch()
   const uid=v4()
   const handleEditButton=(t)=>{
-    seteditinput(t)
-    dispatch(UPDATETASK({...t,isEdited:true}))
+    setEditInput(t)
+    dispatch(updateTask({...t,isEdited:true}))
   }
-  const [input,setinput]=useState({
+  const [input,setInput]=useState({
     id:uid,
     task:'',
     completed:false,
     isEdited:false
   })
-  const [editinput,seteditinput]=useState({
+  const [editInput,setEditInput]=useState({
     id:uid,
     task:'',
     completed:false,
@@ -27,8 +25,8 @@ const Tasks = () => {
   })
 
   const dispatchFunction=()=>{
-    dispatch(ADDTASK(input))
-    setinput((prev)=>{
+    dispatch(addTask(input))
+    setInput((prev)=>{
         return{
             ...prev,
             id:v4(),
@@ -42,7 +40,7 @@ const Tasks = () => {
         <input type="text" 
         value={input.task}
         onChange={(e)=>{
-            setinput((prev)=>{
+            setInput((prev)=>{
                 return{
                     ...prev,
                     task:e.target.value
@@ -52,16 +50,18 @@ const Tasks = () => {
         />
         <button onClick={()=>dispatchFunction()}>Add</button>
     </div>
+    <div className='task-list-wrapper'>
+
     {tasks.map((t,index)=>{
         return(
-        <div key={t.id} style={index===tasks.length-1? { marginBottom:'50px'}:{}} className='task-task'>
+        <div key={t.id}  className='task-task'>
             {t.isEdited?
             <>
-            <div  style={{display:'flex',marginLeft:'15px'}}>
+            <div className='task-input' >
             <input type="text" 
-            value={editinput.task} 
+            value={editInput.task} 
             onChange={(e)=>{
-                seteditinput((prev)=>{
+                setEditInput((prev)=>{
                     return{
                         ...prev,
                         task:e.target.value
@@ -71,28 +71,29 @@ const Tasks = () => {
             />
             </div>
             <div className='button-container'>
-            <button onClick={()=>dispatch(UPDATETASK(editinput))}>Save</button>    
-            <button onClick={()=>dispatch(UPDATETASK({...t,isEdited:!t.isEdited}))}>Cancel</button>    
+            <button onClick={()=>dispatch(updateTask(editInput))}>Save</button>    
+            <button onClick={()=>dispatch(updateTask({...t,isEdited:!t.isEdited}))}>Cancel</button>    
             </div>
             </>
             :
             <>
-            <div  style={{display:'flex',marginLeft:'15px'}}>
-            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(UPDATETASK({...t,completed:!t.completed}))} />
-            <h3 style={t.completed?{textDecoration:'line-through'}:{}}>{t.task}</h3>
+            <div className='task-complete-detail'>
+            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(updateTask({...t,completed:!t.completed}))} />
+            <h3 className={t.completed?'task-complete':''}>{t.task}</h3>
             </div>
             <div className='button-container'>
             <button onClick={()=>handleEditButton(t)}>Edit</button>    
-            <button onClick={()=>dispatch(REMOVETASK(t))}>Delete</button>
+            <button onClick={()=>dispatch(removeTask(t))}>Delete</button>
             </div>
             </>
             }
         </div>
         )
     })}
+    </div>
     {tasks.length===0?
     (
-        <h2 style={{ marginTop:'50px'}}>
+        <h2 className='No-tasks'>
             No Tasks Added
         </h2>
     ):
