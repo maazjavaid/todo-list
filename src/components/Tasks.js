@@ -6,7 +6,6 @@ import { ADDTASK, REMOVETASK, UPDATETASK } from '../redux/tasks'
 import './tasks.css'
 const Tasks = () => {  
   const tasks=useSelector((state)=>state.tasks)
-  console.log(tasks)
   const dispatch=useDispatch()
   const uid=v4()
   const handleEditButton=(t)=>{
