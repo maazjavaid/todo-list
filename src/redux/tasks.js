@@ -8,14 +8,20 @@ const taskSlice=createSlice({
             
         },
         addTaskSuccess:(state,action)=>{ 
-           state=[...state,action.payload.payload]
+           state=[...state,action.payload]
            return state
         },
-        removeTask:(state,action)=>{
+        removeTaskRequest:(state,action)=>{
+
+        },
+        removeTaskSuccess:(state,action)=>{
             state=state.filter((e)=>e.id!==action.payload.id)
             return state
         },
-        updateTask:(state,action)=>{
+        updateTaskRequest:(state,action)=>{
+
+        },
+        updateTaskSuccess:(state,action)=>{
             const update=state.map((e)=>{
             if (e.id===action.payload.id) {
                 return {
@@ -41,5 +47,13 @@ const taskSlice=createSlice({
 })
 
 
-export const {addTaskRequest,addTaskSuccess,removeTask,updateTask}=taskSlice.actions
+export const {
+    addTaskRequest,
+    addTaskSuccess,
+    removeTaskRequest,
+    removeTaskSuccess,
+    updateTaskRequest,
+    updateTaskSuccess
+}=taskSlice.actions
+
 export default taskSlice.reducer 

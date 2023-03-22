@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch} from 'react-redux'
 import { v4 } from 'uuid'
-import { addTask} from '../redux/tasks'
+import { addTaskRequest} from '../redux/tasks'
 import TaskList from './TaskList'
 import './tasks.css'
 const Tasks = () => {  
@@ -15,7 +15,7 @@ const Tasks = () => {
   })
   
   const dispatchFunction=()=>{
-    dispatch(addTask(input))
+    dispatch(addTaskRequest(input))
     setInput((prev)=>{
         return{
             ...prev,

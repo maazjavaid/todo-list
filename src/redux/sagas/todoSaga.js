@@ -1,23 +1,29 @@
 import { takeEvery, put } from 'redux-saga/effects';
-import {addTaskRequest,addTaskSuccess,REMOVETASK,UPDATETASK} from '../tasks.js'
+import {
+    addTaskRequest,
+    addTaskSuccess,
+    removeTaskRequest,
+    removeTaskSuccess,
+    updateTaskRequest,
+    updateTaskSuccess    
+} from '../tasks.js'
 
 function* handleAddTodo(action) {
-    console.log('handling add Todo',action)
-    yield put(addTaskSuccess(action))
+    yield put(addTaskSuccess(action.payload))
 }
 
 function* handleUpdateTodo(action) {
-    yield 1
+    yield put (updateTaskSuccess(action.payload))
 }
 
 function* handleRemoveTodo(action) {
-    yield 2
+    yield put (removeTaskSuccess(action.payload))
 }
 
 function* watchTodos() {
   yield takeEvery(addTaskRequest, handleAddTodo);
-  yield takeEvery(UPDATETASK, handleUpdateTodo);
-  yield takeEvery(REMOVETASK, handleRemoveTodo);
+  yield takeEvery(updateTaskRequest, handleUpdateTodo);
+  yield takeEvery(removeTaskRequest, handleRemoveTodo);
 }
 
 export default watchTodos;

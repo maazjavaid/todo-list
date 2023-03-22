@@ -72,6 +72,9 @@
     display:flex;
     margin-left:15px;
 }
+.button-container{
+    display: flex;
+}
 .task-task .button-container :nth-child(1) {
     height: 30px;
     width: 70px;

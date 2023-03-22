@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { v4 } from 'uuid'
 import {useDispatch,useSelector} from 'react-redux'
-import { removeTask, updateTask } from '../redux/tasks'
+import { removeTaskRequest, updateTaskRequest } from '../redux/tasks'
 const TaskList = () => {
   const tasks=useSelector((state)=>state.tasks)  
   const dispatch=useDispatch()  
@@ -15,7 +15,7 @@ const TaskList = () => {
 
   const handleEditButton=(t)=>{
       setEditInput(t)
-      dispatch(updateTask({...t,isEdited:true}))
+      dispatch(updateTaskRequest({...t,isEdited:true}))
   }  
 
   if(tasks.length===0) return (
@@ -46,19 +46,19 @@ const TaskList = () => {
             />
             </div>
             <div className='button-container'>
-            <button onClick={()=>dispatch(updateTask(editInput))}>Save</button>    
-            <button onClick={()=>dispatch(updateTask({...t,isEdited:!t.isEdited}))}>Cancel</button>    
+            <button onClick={()=>dispatch(updateTaskRequest(editInput))}>Save</button>    
+            <button onClick={()=>dispatch(updateTaskRequest({...t,isEdited:!t.isEdited}))}>Cancel</button>    
             </div>
             </>
             :
             <>
             <div className='task-complete-detail'>
-            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(updateTask({...t,completed:!t.completed}))} />
+            <input type="checkbox" checked={t.completed} onChange={()=>dispatch(updateTaskRequest({...t,completed:!t.completed}))} />
             <h3 className={t.completed?'task-complete':''}>{t.task}</h3>
             </div>
             <div className='button-container'>
             <button onClick={()=>handleEditButton(t)}>Edit</button>    
-            <button onClick={()=>dispatch(removeTask(t))}>Delete</button>
+            <button onClick={()=>dispatch(removeTaskRequest(t))}>Delete</button>
             </div>
             </>
             }
