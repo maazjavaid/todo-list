@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTask, updateTask } from "../redux/tasks";
+import {
+  removeTaskRequest,
+  updateTaskRequest,
+} from "../redux/slices/tasksSlice";
 const TaskList = () => {
   const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
@@ -32,7 +35,7 @@ const TaskList = () => {
                 <div className="button-container">
                   <button
                     onClick={() => {
-                      dispatch(updateTask(editInput));
+                      dispatch(updateTaskRequest(editInput));
                       setEditInput({});
                     }}
                   >
@@ -57,7 +60,9 @@ const TaskList = () => {
                 type="checkbox"
                 checked={task.completed}
                 onChange={() =>
-                  dispatch(updateTask({ ...task, completed: !task.completed }))
+                  dispatch(
+                    updateTaskRequest({ ...task, completed: !task.completed })
+                  )
                 }
               />
               <h3 className={task.completed ? "task-complete" : ""}>
@@ -66,7 +71,9 @@ const TaskList = () => {
             </div>
             <div className="button-container">
               <button onClick={() => setEditInput(task)}>Edit</button>
-              <button onClick={() => dispatch(removeTask(task))}>Delete</button>
+              <button onClick={() => dispatch(removeTaskRequest(task))}>
+                Delete
+              </button>
             </div>
           </div>
         );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 } from "uuid";
-import { addTask } from "../redux/tasks";
+import { addTaskRequest } from "../redux/slices/tasksSlice";
 import TaskList from "./TaskList";
 import "./tasks.css";
 const Tasks = () => {
@@ -24,7 +24,7 @@ const Tasks = () => {
         <button
           onClick={() => {
             dispatch(
-              addTask({
+              addTaskRequest({
                 title: input,
                 completed: false,
                 id: uid,

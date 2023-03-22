@@ -1,23 +1,24 @@
-import { takeEvery, put } from 'redux-saga/effects';
+import { takeEvery, put } from "redux-saga/effects";
 import {
-    addTaskRequest,
-    addTaskSuccess,
-    removeTaskRequest,
-    removeTaskSuccess,
-    updateTaskRequest,
-    updateTaskSuccess    
-} from '../tasks.js'
+  addTaskRequest,
+  addTaskSuccess,
+  removeTaskRequest,
+  removeTaskSuccess,
+  updateTaskRequest,
+  updateTaskSuccess,
+} from "../slices/tasksSlice.js";
 
 function* handleAddTodo(action) {
-    yield put(addTaskSuccess(action.payload))
+  console.log("hello");
+  yield put(addTaskSuccess(action.payload));
 }
 
 function* handleUpdateTodo(action) {
-    yield put (updateTaskSuccess(action.payload))
+  yield put(updateTaskSuccess(action.payload));
 }
 
 function* handleRemoveTodo(action) {
-    yield put (removeTaskSuccess(action.payload))
+  yield put(removeTaskSuccess(action.payload));
 }
 
 function* watchTodos() {

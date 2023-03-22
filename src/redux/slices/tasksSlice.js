@@ -4,37 +4,29 @@ const taskSlice = createSlice({
   name: "tasks",
   initialState: [],
   reducers: {
-    addTaskRequest: (state, action) => {},
+    addTaskRequest: () => {},
     addTaskSuccess: (state, action) => {
       state = [...state, action.payload];
       return state;
     },
-    removeTaskRequest: (state, action) => {},
+    removeTaskRequest: () => {},
     removeTaskSuccess: (state, action) => {
       state = state.filter((e) => e.id !== action.payload.id);
       return state;
     },
-    updateTaskRequest: (state, action) => {},
+    updateTaskRequest: () => {},
     updateTaskSuccess: (state, action) => {
       const update = state.map((e) => {
         if (e.id === action.payload.id) {
           return {
             ...e,
-            task: action.payload.task,
+            title: action.payload.title,
             completed: action.payload.completed,
-            isEdited: action.payload.isEdited,
-          };
-        }
-        if (action.payload.isEdited === true) {
-          return {
-            ...e,
-            isEdited: false,
           };
         }
         return e;
       });
-      state = update;
-      return state;
+      return update;
     },
   },
 });
