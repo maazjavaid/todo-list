@@ -1,11 +1,12 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { removeTask, updateTask } from "../redux/tasks";
-const TaskList = ({ tasks, editInput, setEditInput, editId, setEditId }) => {
+const TaskList = () => {
+  const tasks = useSelector((state) => state.tasks);
   const dispatch = useDispatch();
+  const [editInput, setEditInput] = useState({});
   const handleEditButton = (t) => {
     setEditInput(t);
-    setEditId(t.id);
   };
 
   if (tasks.length === 0) return <h2 className="No-tasks">No Tasks Added</h2>;
@@ -15,7 +16,7 @@ const TaskList = ({ tasks, editInput, setEditInput, editId, setEditId }) => {
       {tasks.map((t) => {
         return (
           <div key={t.id} className="task-task">
-            {t.id === editId ? (
+            {t.id === editInput?.id ? (
               <>
                 <div className="task-input">
                   <input
@@ -35,24 +36,14 @@ const TaskList = ({ tasks, editInput, setEditInput, editId, setEditId }) => {
                   <button
                     onClick={() => {
                       dispatch(updateTask(editInput));
-                      setEditInput(() => {
-                        return {
-                          task: "",
-                        };
-                      });
-                      setEditId(null);
+                      setEditInput({});
                     }}
                   >
                     Save
                   </button>
                   <button
                     onClick={() => {
-                      setEditInput(() => {
-                        return {
-                          task: "",
-                        };
-                      });
-                      setEditId(null);
+                      setEditInput({});
                     }}
                   >
                     Cancel
