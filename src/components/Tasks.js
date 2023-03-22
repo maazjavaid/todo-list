@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { v4 } from 'uuid'
 // import { addtask, removeTask, updateTask } from '../actions'
-import { ADDTASK, REMOVETASK, UPDATETASK } from '../redux/tasks'
+import { addTaskRequest, REMOVETASK, UPDATETASK } from '../redux/tasks'
 import './tasks.css'
 const Tasks = () => {  
   const tasks=useSelector((state)=>state.tasks)
@@ -26,7 +26,7 @@ const Tasks = () => {
   })
 
   const dispatchFunction=()=>{
-    dispatch(ADDTASK(input))
+    dispatch(addTaskRequest(input))
     setinput((prev)=>{
         return{
             ...prev,

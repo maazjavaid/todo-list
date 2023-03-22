@@ -4,8 +4,11 @@ const taskSlice=createSlice({
     name:'tasks',
     initialState:[],
     reducers:{
-        ADDTASK:(state,action)=>{
-           state=[...state,action.payload]
+        addTaskRequest:(state,action)=>{
+            
+        },
+        addTaskSuccess:(state,action)=>{ 
+           state=[...state,action.payload.payload]
            return state
         },
         REMOVETASK:(state,action)=>{
@@ -37,5 +40,5 @@ const taskSlice=createSlice({
 })
 
 
-export const {ADDTASK,REMOVETASK,UPDATETASK}=taskSlice.actions
+export const {addTaskRequest,addTaskSuccess,REMOVETASK,UPDATETASK}=taskSlice.actions
 export default taskSlice.reducer 
