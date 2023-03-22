@@ -25,7 +25,7 @@ const Tasks = () => {
           onClick={() => {
             dispatch(
               addTask({
-                task: input,
+                title: input,
                 completed: false,
                 id: uid,
               })

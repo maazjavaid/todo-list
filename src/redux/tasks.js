@@ -17,7 +17,7 @@ const taskSlice = createSlice({
         if (e.id === action.payload.id) {
           return {
             ...e,
-            task: action.payload.task,
+            title: action.payload.title,
             completed: action.payload.completed,
           };
         }
