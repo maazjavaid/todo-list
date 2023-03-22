@@ -1,48 +1,45 @@
-import React, { useState } from 'react'
-import { useDispatch} from 'react-redux'
-import { v4 } from 'uuid'
-import { addTaskRequest} from '../redux/tasks'
-import TaskList from './TaskList'
-import './tasks.css'
-const Tasks = () => {  
-  const dispatch=useDispatch()
-  const uid=v4()
-  const [input,setInput]=useState({
-    id:uid,
-    task:'',
-    completed:false,
-    isEdited:false
-  })
-  
-  const dispatchFunction=()=>{
-    dispatch(addTaskRequest(input))
-    setInput((prev)=>{
-        return{
-            ...prev,
-            id:v4(),
-        }
-    })
-  }
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { v4 } from "uuid";
+import { addTask } from "../redux/tasks";
+import TaskList from "./TaskList";
+import "./tasks.css";
+const Tasks = () => {
+  const dispatch = useDispatch();
+  const uid = v4();
+  const [input, setInput] = useState("");
   return (
-    <div className='task-container'>
-        <h1>Task Todo List</h1>
-    <div className='task-input'>
-        <input type="text" 
-        value={input.task}
-        onChange={(e)=>{
-            setInput((prev)=>{
-                return{
-                    ...prev,
-                    task:e.target.value
-                }
-            })
-        }}
-        />
-        <button onClick={()=>dispatchFunction()}>Add</button>
-    </div>
-    <TaskList/>
-    </div>
-  )
-}
+    <div className="task-container">
+      <h1>Task Todo List</h1>
 
-export default Tasks
+      <div className="task-input">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => {
+            setInput(e.target.value);
+          }}
+        />
+
+        <button
+          onClick={() => {
+            dispatch(
+              addTask({
+                title: input,
+                completed: false,
+                id: uid,
+              })
+            );
+            setInput("");
+          }}
+        >
+          Add
+        </button>
+      </div>
+
+      <TaskList />
+    </div>
+  );
+};
+
+export default Tasks;
