@@ -35,6 +35,14 @@
     color: white;
     border-radius: 5px;
 }
+
+.task-list-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 40px;
+}
 .task-task{
     display: flex;
     width: 80%;
@@ -48,8 +56,21 @@
 .task-task h3{
     margin-left: 15px;
 }
+.task-input{
+    display:flex;
+    margin-left:15px;
+}
+
+.task-complete{
+    text-decoration: line-through;
+}
 .task-task div{
     margin-right: 15px;
+}
+
+.task-complete-detail{
+    display:flex;
+    margin-left:15px;
 }
 .task-task .button-container :nth-child(1) {
     height: 30px;
@@ -73,4 +94,8 @@
     cursor: pointer;
     color: white;
     border-radius: 5px;
+}
+
+.No-tasks{
+    margin-top: 50px;
 }
