@@ -6,17 +6,15 @@ const taskSlice = createSlice({
   reducers: {
     addTaskRequest: () => {},
     addTaskSuccess: (state, action) => {
-      state = [...state, action.payload];
-      return state;
+      return [...state, action.payload];
     },
     removeTaskRequest: () => {},
     removeTaskSuccess: (state, action) => {
-      state = state.filter((e) => e.id !== action.payload.id);
-      return state;
+      return state.filter((e) => e.id !== action.payload.id);
     },
     updateTaskRequest: () => {},
     updateTaskSuccess: (state, action) => {
-      const update = state.map((e) => {
+      return state.map((e) => {
         if (e.id === action.payload.id) {
           return {
             ...e,
@@ -26,7 +24,6 @@ const taskSlice = createSlice({
         }
         return e;
       });
-      return update;
     },
   },
 });

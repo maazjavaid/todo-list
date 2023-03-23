@@ -9,7 +9,6 @@ import {
 } from "../slices/tasksSlice.js";
 
 function* handleAddTodo(action) {
-  console.log("hello");
   yield put(addTaskSuccess(action.payload));
 }
 
