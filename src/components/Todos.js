@@ -1,13 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { v4 } from "uuid";
-import { addTaskRequest } from "../redux/slices/tasksSlice";
-import TaskList from "./TaskList";
-import "./tasks.css";
-const Tasks = () => {
+import { addTodoRequest } from "../state/ducks/todos/todoSlice";
+import Loader from "./Loader";
+import TodoList from "./TodoList";
+import "./todos.css";
+const Todos = () => {
   const dispatch = useDispatch();
   const uid = v4();
   const [input, setInput] = useState("");
+  const loading = useSelector((state) => state.todos.loading);
+  const error = useSelector((state) => state.todos.error);
   return (
     <div className="task-container">
       <h1>Task Todo List</h1>
@@ -24,7 +27,7 @@ const Tasks = () => {
         <button
           onClick={() => {
             dispatch(
-              addTaskRequest({
+              addTodoRequest({
                 title: input,
                 completed: false,
                 id: uid,
@@ -36,10 +39,10 @@ const Tasks = () => {
           Add
         </button>
       </div>
-
-      <TaskList />
+      {error && <div>{error}</div>}
+      {loading ? <Loader /> : <TodoList />}
     </div>
   );
 };
 
-export default Tasks;
+export default Todos;

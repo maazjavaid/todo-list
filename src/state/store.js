@@ -1,14 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import watchTodos from "./sagas/todoSaga";
-import tasksReducer from "./slices/tasksSlice";
 import createSagaMiddleware from "redux-saga";
+import { rootReducer, rootSaga } from "./ducks";
 const sagaMiddleware = createSagaMiddleware();
-
 export default configureStore({
-  reducer: {
-    tasks: tasksReducer,
-  },
+  reducer: rootReducer,
   middleware: [sagaMiddleware],
 });
 
-sagaMiddleware.run(watchTodos);
+sagaMiddleware.run(rootSaga);

@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  removeTaskRequest,
-  updateTaskRequest,
-} from "../redux/slices/tasksSlice";
-const TaskList = () => {
-  const tasks = useSelector((state) => state.tasks);
+  removeTodoRequest,
+  updateTodoRequest,
+} from "../state/ducks/todos/todoSlice";
+const TodoList = () => {
+  const todos = useSelector((state) => state.todos.data);
   const dispatch = useDispatch();
   const [editInput, setEditInput] = useState({});
 
-  if (tasks.length === 0) return <h2 className="No-tasks">No Tasks Added</h2>;
+  if (todos.length === 0) return <h2 className="No-tasks">No Tasks Added</h2>;
 
   return (
     <div className="task-list-wrapper">
-      {tasks.map((task) => {
+      {todos.map((task) => {
         if (task.id === editInput?.id)
           return (
             <div key={task.id} className="task-task">
@@ -35,7 +35,7 @@ const TaskList = () => {
                 <div className="button-container">
                   <button
                     onClick={() => {
-                      dispatch(updateTaskRequest(editInput));
+                      dispatch(updateTodoRequest(editInput));
                       setEditInput({});
                     }}
                   >
@@ -61,7 +61,7 @@ const TaskList = () => {
                 checked={task.completed}
                 onChange={() =>
                   dispatch(
-                    updateTaskRequest({ ...task, completed: !task.completed })
+                    updateTodoRequest({ ...task, completed: !task.completed })
                   )
                 }
               />
@@ -71,7 +71,7 @@ const TaskList = () => {
             </div>
             <div className="button-container">
               <button onClick={() => setEditInput(task)}>Edit</button>
-              <button onClick={() => dispatch(removeTaskRequest(task))}>
+              <button onClick={() => dispatch(removeTodoRequest(task))}>
                 Delete
               </button>
             </div>
@@ -82,4 +82,4 @@ const TaskList = () => {
   );
 };
 
-export default TaskList;
+export default TodoList;
