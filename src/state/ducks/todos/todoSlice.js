@@ -16,16 +16,25 @@ const todoSlice = createSlice({
       };
     },
     addTodoSuccess: (state, action) => {
-      state.data.push(action.payload);
-      state.loading = false;
+      return {
+        data: [...state.data, action.payload],
+        loading: false,
+        error: null,
+      };
     },
     addTodoFail: (state) => {
-      state.loading = false;
-      state.error = "Todo not added";
+      return {
+        ...state,
+        loading: false,
+        error: "Todo not added",
+      };
     },
     removeTodoRequest: (state) => {
-      state.loading = true;
-      state.error = null;
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     },
     removeTodoSuccess: (state, action) => {
       return {
@@ -35,12 +44,18 @@ const todoSlice = createSlice({
       };
     },
     removeTodoFail: (state) => {
-      state.loading = false;
-      state.error = "Todo not removed";
+      return {
+        ...state,
+        loading: false,
+        error: "Todo not removed",
+      };
     },
     updateTodoRequest: (state) => {
-      state.loading = true;
-      state.error = null;
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
     },
     updateTodoSuccess: (state, action) => {
       return {
@@ -59,8 +74,11 @@ const todoSlice = createSlice({
       };
     },
     updateTodoFail: (state) => {
-      state.loading = false;
-      state.error = "Todo not updated";
+      return {
+        ...state,
+        loading: false,
+        error: "Todo not updated",
+      };
     },
   },
 });
