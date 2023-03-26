@@ -4,10 +4,31 @@ import {
   removeTodoRequest,
   updateTodoRequest,
 } from "../state/ducks/todos/todoSlice";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
 const TodoList = () => {
   const todos = useSelector((state) => state.todos.data);
   const dispatch = useDispatch();
   const [editInput, setEditInput] = useState({});
+
+  const schema = yup.object({
+    title: yup.string().required("Title is required"),
+  });
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = (data) => {
+    dispatch(updateTodoRequest({ ...editInput, title: data.title }));
+    setEditInput({});
+    reset();
+  };
 
   if (todos.length === 0) return <h2 className="No-tasks">No Tasks Added</h2>;
 
@@ -16,41 +37,34 @@ const TodoList = () => {
       {todos.map((task) => {
         if (task.id === editInput?.id)
           return (
-            <div key={task.id} className="task-task">
-              <>
-                <div className="task-input">
-                  <input
-                    type="text"
-                    value={editInput.title}
-                    onChange={(e) => {
-                      setEditInput((prev) => {
-                        return {
-                          ...prev,
-                          title: e.target.value,
-                        };
-                      });
-                    }}
-                  />
-                </div>
-                <div className="button-container">
-                  <button
-                    onClick={() => {
-                      dispatch(updateTodoRequest(editInput));
-                      setEditInput({});
-                    }}
-                  >
-                    Save
-                  </button>
-                  <button
-                    onClick={() => {
-                      setEditInput({});
-                    }}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </>
-            </div>
+            <>
+              <form
+                key={task.id}
+                onSubmit={handleSubmit(onSubmit)}
+                className="task-task"
+              >
+                <>
+                  <div className="task-input">
+                    <input
+                      type="text"
+                      defaultValue={task.title}
+                      {...register("title")}
+                    />
+                  </div>
+                  <div className="button-container">
+                    <button type="submit">Save</button>
+                    <button
+                      onClick={() => {
+                        setEditInput({});
+                      }}
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              </form>
+              {errors.title && <div>{errors.title.message}</div>}
+            </>
           );
 
         return (
@@ -70,7 +84,14 @@ const TodoList = () => {
               </h3>
             </div>
             <div className="button-container">
-              <button onClick={() => setEditInput(task)}>Edit</button>
+              <button
+                onClick={() => {
+                  reset();
+                  setEditInput(task);
+                }}
+              >
+                Edit
+              </button>
               <button onClick={() => dispatch(removeTodoRequest(task))}>
                 Delete
               </button>
