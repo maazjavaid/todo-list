@@ -1,12 +1,12 @@
-import React from 'react'
-import './App.css'
-import Tasks from './components/Tasks'
+import React from "react";
+import "./App.css";
+import TodosContainer from "./containers/TodosContainer";
 const App = () => {
   return (
-    <div className='container'>
-      <Tasks/>
+    <div className="container">
+      <TodosContainer />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
