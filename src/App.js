@@ -1,10 +1,10 @@
 import React from "react";
 import "./App.css";
-import Todos from "./components/Todos";
+import TodosContainer from "./containers/TodosContainer";
 const App = () => {
   return (
     <div className="container">
-      <Todos />
+      <TodosContainer />
     </div>
   );
 };

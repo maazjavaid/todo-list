@@ -70,7 +70,7 @@ const todoSlice = createSlice({
           return e;
         }),
         loading: false,
-        error: false,
+        error: null,
       };
     },
     updateTodoFail: (state) => {

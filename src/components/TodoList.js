@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  removeTodoRequest,
-  updateTodoRequest,
-} from "../state/ducks/todos/todoSlice";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-const TodoList = () => {
-  const todos = useSelector((state) => state.todos.data);
-  const dispatch = useDispatch();
+const TodoList = ({ todos, removeTodoRequest, updateTodoRequest }) => {
   const [editInput, setEditInput] = useState({});
 
   const schema = yup.object({
@@ -25,7 +18,7 @@ const TodoList = () => {
   });
 
   const onSubmit = (data) => {
-    dispatch(updateTodoRequest({ ...editInput, title: data.title }));
+    updateTodoRequest({ ...editInput, title: data.title });
     setEditInput({});
     reset();
   };
@@ -74,9 +67,7 @@ const TodoList = () => {
                 type="checkbox"
                 checked={task.completed}
                 onChange={() =>
-                  dispatch(
-                    updateTodoRequest({ ...task, completed: !task.completed })
-                  )
+                  updateTodoRequest({ ...task, completed: !task.completed })
                 }
               />
               <h3 className={task.completed ? "task-complete" : ""}>
@@ -92,9 +83,7 @@ const TodoList = () => {
               >
                 Edit
               </button>
-              <button onClick={() => dispatch(removeTodoRequest(task))}>
-                Delete
-              </button>
+              <button onClick={() => removeTodoRequest(task)}>Delete</button>
             </div>
           </div>
         );
