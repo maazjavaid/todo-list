@@ -24,7 +24,7 @@ function* getTodoTasks(action) {
   }
 }
 
-function* handleAddTodo(action) {
+function* AddTodo(action) {
   try {
     const res = yield call(apiCallRequest, "", "POST", action.payload);
     yield put(addTodoSuccess(res));
@@ -33,7 +33,7 @@ function* handleAddTodo(action) {
   }
 }
 
-function* handleUpdateTodo(action) {
+function* UpdateTodo(action) {
   try {
     yield call(apiCallRequest, action.payload._id, "PUT", {
       title: action.payload.title,
@@ -45,7 +45,7 @@ function* handleUpdateTodo(action) {
   }
 }
 
-function* handleRemoveTodo(action) {
+function* RemoveTodo(action) {
   try {
     yield call(apiCallRequest, action.payload._id, "DELETE", null);
     yield put(removeTodoSuccess(action.payload));
@@ -56,9 +56,9 @@ function* handleRemoveTodo(action) {
 
 function* watchTodos() {
   yield takeLatest(getTodosRequest, getTodoTasks);
-  yield takeEvery(addTodoRequest, handleAddTodo);
-  yield takeEvery(updateTodoRequest, handleUpdateTodo);
-  yield takeEvery(removeTodoRequest, handleRemoveTodo);
+  yield takeEvery(addTodoRequest, AddTodo);
+  yield takeEvery(updateTodoRequest, UpdateTodo);
+  yield takeEvery(removeTodoRequest, RemoveTodo);
 }
 
 export default watchTodos;
