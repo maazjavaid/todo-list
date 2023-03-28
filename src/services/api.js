@@ -8,6 +8,6 @@ export const apiCallRequest = async (path, method, requestPayload) => {
     body: requestPayload ? JSON.stringify(requestPayload) : null,
   });
   if (method === "DELETE" || method === "PUT") return response;
-  const data = await response.json();
+  const data = await response.json?.();
   return data;
 };
