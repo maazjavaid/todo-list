@@ -8,21 +8,21 @@ const todoSlice = createSlice({
     error: null,
   },
   reducers: {
-    fetchTodosRequest: (state) => {
+    getTodosRequest: (state) => {
       return {
         ...state,
         loading: true,
         error: null,
       };
     },
-    fetchTodosSuccess: (state, action) => {
+    getTodosSuccess: (state, action) => {
       return {
         data: action.payload,
         loading: false,
         error: null,
       };
     },
-    fetchTodosFail: (state, action) => {
+    getTodosFail: (state, action) => {
       return {
         ...state,
         loading: false,
@@ -105,9 +105,9 @@ const todoSlice = createSlice({
 });
 
 export const {
-  fetchTodosRequest,
-  fetchTodosSuccess,
-  fetchTodosFail,
+  getTodosRequest,
+  getTodosSuccess,
+  getTodosFail,
   addTodoRequest,
   addTodoSuccess,
   addTodoFail,

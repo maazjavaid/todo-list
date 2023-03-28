@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Loader from "./Loader";
+import Loader from "components/Loader";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./todos.css";
-import TodoListContainer from "../containers/TodoListContainer";
-const Todos = ({ loading, error, fetchTodosRequest, addTodoRequest }) => {
+import "components/todos.css";
+import TodoListContainer from "containers/TodoListContainer";
+const Todos = ({ loading, error, getTodosRequest, addTodoRequest }) => {
   useEffect(() => {
-    fetchTodosRequest();
+    getTodosRequest();
   }, []);
 
   const schema = yup.object({

@@ -1,11 +1,11 @@
 const base_url = process.env.REACT_APP_BASE_URL;
-export const ApiCallTodos = async (path, method, todo) => {
+export const apiCallRequest = async (path, method, requestPayload) => {
   const response = await fetch(base_url + "/todos/" + path, {
     method,
     headers: {
       "Content-Type": "application/json",
     },
-    body: todo ? JSON.stringify(todo) : null,
+    body: requestPayload ? JSON.stringify(requestPayload) : null,
   });
   if (method === "DELETE" || method === "PUT") return response;
   const data = await response.json();

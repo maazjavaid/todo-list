@@ -1,9 +1,9 @@
 import { takeEvery, put, call, takeLatest } from "redux-saga/effects";
-import { ApiCallTodos } from "../../../services/api.js";
+import { apiCallRequest } from "services/api.js";
 import {
-  fetchTodosRequest,
-  fetchTodosSuccess,
-  fetchTodosFail,
+  getTodosRequest,
+  getTodosSuccess,
+  getTodosFail,
   addTodoRequest,
   addTodoSuccess,
   addTodoFail,
@@ -13,20 +13,20 @@ import {
   updateTodoRequest,
   updateTodoSuccess,
   updateTodoFail,
-} from "./todoSlice.js";
+} from "state/ducks/todos/todoSlice";
 
-function* handleFetchTodos(action) {
+function* getTodoTasks(action) {
   try {
-    const data = yield call(ApiCallTodos, "", "GET", null);
-    yield put(fetchTodosSuccess(data));
+    const data = yield call(apiCallRequest, "", "GET", null);
+    yield put(getTodosSuccess(data));
   } catch (error) {
-    yield put(fetchTodosFail());
+    yield put(getTodosFail());
   }
 }
 
 function* handleAddTodo(action) {
   try {
-    const res = yield call(ApiCallTodos, "", "POST", action.payload);
+    const res = yield call(apiCallRequest, "", "POST", action.payload);
     yield put(addTodoSuccess(res));
   } catch (error) {
     yield put(addTodoFail());
@@ -35,7 +35,7 @@ function* handleAddTodo(action) {
 
 function* handleUpdateTodo(action) {
   try {
-    yield call(ApiCallTodos, action.payload._id, "PUT", {
+    yield call(apiCallRequest, action.payload._id, "PUT", {
       title: action.payload.title,
       completed: action.payload.completed,
     });
@@ -47,7 +47,7 @@ function* handleUpdateTodo(action) {
 
 function* handleRemoveTodo(action) {
   try {
-    yield call(ApiCallTodos, action.payload._id, "DELETE", null);
+    yield call(apiCallRequest, action.payload._id, "DELETE", null);
     yield put(removeTodoSuccess(action.payload));
   } catch (error) {
     yield put(removeTodoFail());
@@ -55,7 +55,7 @@ function* handleRemoveTodo(action) {
 }
 
 function* watchTodos() {
-  yield takeLatest(fetchTodosRequest, handleFetchTodos);
+  yield takeLatest(getTodosRequest, getTodoTasks);
   yield takeEvery(addTodoRequest, handleAddTodo);
   yield takeEvery(updateTodoRequest, handleUpdateTodo);
   yield takeEvery(removeTodoRequest, handleRemoveTodo);
