@@ -1,10 +1,5 @@
 import { takeEvery, put, call, takeLatest } from "redux-saga/effects";
-import {
-  createTodo,
-  deleteTodo,
-  fetchTodoList,
-  updateTodo,
-} from "../../../services/api.js";
+import { ApiCallTodos } from "../../../services/api.js";
 import {
   fetchTodosRequest,
   fetchTodosSuccess,
@@ -22,7 +17,7 @@ import {
 
 function* handleFetchTodos(action) {
   try {
-    const data = yield call(fetchTodoList);
+    const data = yield call(ApiCallTodos, "", "GET", null);
     yield put(fetchTodosSuccess(data));
   } catch (error) {
     yield put(fetchTodosFail());
@@ -31,7 +26,7 @@ function* handleFetchTodos(action) {
 
 function* handleAddTodo(action) {
   try {
-    const res = yield call(createTodo, action.payload);
+    const res = yield call(ApiCallTodos, "", "POST", action.payload);
     yield put(addTodoSuccess(res));
   } catch (error) {
     yield put(addTodoFail());
@@ -40,7 +35,10 @@ function* handleAddTodo(action) {
 
 function* handleUpdateTodo(action) {
   try {
-    yield call(updateTodo, action.payload);
+    yield call(ApiCallTodos, action.payload._id, "PUT", {
+      title: action.payload.title,
+      completed: action.payload.completed,
+    });
     yield put(updateTodoSuccess(action.payload));
   } catch (error) {
     yield put(updateTodoFail());
@@ -49,7 +47,7 @@ function* handleUpdateTodo(action) {
 
 function* handleRemoveTodo(action) {
   try {
-    yield call(deleteTodo, action.payload);
+    yield call(ApiCallTodos, action.payload._id, "DELETE", null);
     yield put(removeTodoSuccess(action.payload));
   } catch (error) {
     yield put(removeTodoFail());
