@@ -1,4 +1,4 @@
-import { takeEvery, put, call } from "redux-saga/effects";
+import { takeEvery, put, call, takeLatest } from "redux-saga/effects";
 import {
   createTodo,
   deleteTodo,
@@ -57,7 +57,7 @@ function* handleRemoveTodo(action) {
 }
 
 function* watchTodos() {
-  yield takeEvery(fetchTodosRequest, handleFetchTodos);
+  yield takeLatest(fetchTodosRequest, handleFetchTodos);
   yield takeEvery(addTodoRequest, handleAddTodo);
   yield takeEvery(updateTodoRequest, handleUpdateTodo);
   yield takeEvery(removeTodoRequest, handleRemoveTodo);
