@@ -8,6 +8,27 @@ const todoSlice = createSlice({
     error: null,
   },
   reducers: {
+    getTodosRequest: (state) => {
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    },
+    getTodosSuccess: (state, action) => {
+      return {
+        data: action.payload,
+        loading: false,
+        error: null,
+      };
+    },
+    getTodosFail: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: "Failed to fetch todos",
+      };
+    },
     addTodoRequest: (state) => {
       return {
         ...state,
@@ -38,7 +59,7 @@ const todoSlice = createSlice({
     },
     removeTodoSuccess: (state, action) => {
       return {
-        data: state.data.filter((e) => e.id !== action.payload.id),
+        data: state.data.filter((e) => e._id !== action.payload._id),
         loading: false,
         error: null,
       };
@@ -60,7 +81,7 @@ const todoSlice = createSlice({
     updateTodoSuccess: (state, action) => {
       return {
         data: state.data.map((e) => {
-          if (e.id === action.payload.id) {
+          if (e._id === action.payload._id) {
             return {
               ...e,
               title: action.payload.title,
@@ -84,12 +105,18 @@ const todoSlice = createSlice({
 });
 
 export const {
+  getTodosRequest,
+  getTodosSuccess,
+  getTodosFail,
   addTodoRequest,
   addTodoSuccess,
+  addTodoFail,
   removeTodoRequest,
   removeTodoSuccess,
+  removeTodoFail,
   updateTodoRequest,
   updateTodoSuccess,
+  updateTodoFail,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

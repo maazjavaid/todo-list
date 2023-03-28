@@ -28,11 +28,11 @@ const TodoList = ({ todos, removeTodoRequest, updateTodoRequest }) => {
   return (
     <div className="task-list-wrapper">
       {todos.map((task) => {
-        if (task.id === editInput?.id)
+        if (task._id === editInput?._id)
           return (
             <>
               <form
-                key={task.id}
+                key={task._id}
                 onSubmit={handleSubmit(onSubmit)}
                 className="task-task"
               >
@@ -61,7 +61,7 @@ const TodoList = ({ todos, removeTodoRequest, updateTodoRequest }) => {
           );
 
         return (
-          <div key={task.id} className="task-task">
+          <div key={task._id} className="task-task">
             <div className="task-complete-detail">
               <input
                 type="checkbox"

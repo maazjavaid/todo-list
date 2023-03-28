@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { v4 } from "uuid";
-import Loader from "./Loader";
+import Loader from "components/Loader";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import "./todos.css";
-import TodoListContainer from "../containers/TodoListContainer";
-const Todos = ({ loading, error, addTodoRequest }) => {
+import "components/todos.css";
+import TodoListContainer from "containers/TodoListContainer";
+const Todos = ({ loading, error, getTodosRequest, addTodoRequest }) => {
+  useEffect(() => {
+    getTodosRequest();
+  }, []);
+
   const schema = yup.object({
     title: yup.string().required("Title is required"),
   });
@@ -23,7 +26,6 @@ const Todos = ({ loading, error, addTodoRequest }) => {
     addTodoRequest({
       title: data.title,
       completed: false,
-      id: v4(),
     });
     reset();
   };

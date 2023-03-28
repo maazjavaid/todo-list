@@ -1,10 +1,10 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import TodoList from "../components/TodoList";
+import TodoList from "components/TodoList";
 import {
   removeTodoRequest,
   updateTodoRequest,
-} from "../state/ducks/todos/todoSlice";
+} from "state/ducks/todos/todoSlice";
 
 const mapStateToProps = (state) => {
   return {

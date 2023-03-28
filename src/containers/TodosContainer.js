@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import Todos from "../components/Todos";
-import { addTodoRequest } from "../state/ducks/todos/todoSlice";
+import Todos from "components/Todos";
+import { addTodoRequest, getTodosRequest } from "state/ducks/todos/todoSlice";
 
 const mapStateToProps = (state) => {
   return {
@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators(
     {
+      getTodosRequest,
       addTodoRequest,
     },
     dispatch
